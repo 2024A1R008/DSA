@@ -55,7 +55,7 @@ char *infixToprefix(char *exp){
             if(top==-1)
             operator[++top]=ch;
             else{
-                while(top!=-1 && precedence(ch)<=precedence(operator[top])){
+                while(top!=-1 && precedence(ch)<precedence(operator[top])){
                     str[index++]=operator[top--];
                 }
                 operator[++top]=ch;
