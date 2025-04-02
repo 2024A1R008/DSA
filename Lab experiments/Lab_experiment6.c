@@ -1,3 +1,4 @@
+//Implement a Queue using Array and develop functions to perform enqueue and dequeue operations.
 #include <stdio.h> 
 #include <stdlib.h>
 #define SIZE 100
