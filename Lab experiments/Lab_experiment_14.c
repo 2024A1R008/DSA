@@ -101,10 +101,15 @@ int main(){
         scanf("%d", &choice);
         switch (choice) {
             case 1:
-                printf("Enter the value: ");
-                scanf("%d", &n);
-                insert(0,n);
-                break;
+            printf("Enter the number of values to insert: ");
+            scanf("%d", &n);
+            printf("Enter the values: ");
+            for (int i = 0; i < n; i++) {
+                int value;
+                scanf("%d", &value);
+                insert(0, value);
+            }
+            break;
             case 2:
                 printf("Preorder traversal: ");
                 preorder(0);
