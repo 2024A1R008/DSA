@@ -1,3 +1,4 @@
+//Date: 29 april,2025
 //Implement a Binary Tree using Linked List and develop functions to perform traversal, searching, insertion and deletion operations.
 #include <stdio.h>
 #include <stdlib.h>
@@ -45,8 +46,10 @@ void preorder(tnode* root){
     preorder(root->right);
 }
 void inorder(tnode* root){
-    if(root==NULL) return;
-    inorder(root->left);
+    if(root == NULL) return;
+    inorder(root->left);  // Visit left subtree
+    printf("%d ", root->data);  // Print current node
+    inorder(root->right);  // Visit right subtree
 }
 void postorder(tnode* root){
     if(root == NULL) return;
@@ -81,28 +84,52 @@ tnode* search(tnode* root,int target){
         queue[rear++]=temp->right;
     }
 }
-tnode* findDeepest(tnode* root){
-    if(root==NULL) return NULL;
-    else{
+// tnode* findDeepest(tnode* root){
+//     if(root==NULL) return NULL;
+//     else{
+//     tnode* queue[100];
+//     int front=0,rear=0;
+//     queue[rear++]=root;
+//     tnode* temp;
+//     while(front!=rear){
+//         temp=queue[front++];
+//         printf("%d ", temp->data);
+//         if(temp->left!=NULL)
+//         queue[rear++]=temp->left;
+//         if(temp->right!=NULL)
+//         queue[rear++]=temp->right;
+//     }
+//     int i=(rear-2)/2;
+//     if(queue[i]->left==temp)
+//     queue[i]->left=NULL;
+//     else
+//     queue[i]->right=NULL;
+//     return temp;
+//     }
+// }
+tnode* findDeepest(tnode* root) {
+    if (root == NULL) return NULL;
     tnode* queue[100];
-    int front=0,rear=0;
-    queue[rear++]=root;
-    tnode* temp;
-    while(front!=rear){
-        temp=queue[front++];
-        printf("%d ", temp->data);
-        if(temp->left!=NULL)
-        queue[rear++]=temp->left;
-        if(temp->right!=NULL)
-        queue[rear++]=temp->right;
+    int front = 0, rear = 0;
+    queue[rear++] = root;
+    tnode* last = NULL, *parent = NULL;
+    while (front != rear) {
+        last = queue[front++];
+        if (last->left) {
+            queue[rear++] = last->left;
+            parent = last;
+        }
+        if (last->right) {
+            queue[rear++] = last->right;
+            parent = last;
+        }
     }
-    int i=(rear-2)/2;
-    if(queue[i]->left==temp)
-    queue[i]->left=NULL;
-    else
-    queue[i]->right=NULL;
-    return temp;
+    // Remove the deepest node from its parent's reference
+    if (parent) {
+        if (parent->left == last) parent->left = NULL;
+        else parent->right = NULL;
     }
+    return last;
 }
 void deleteNode(tnode* root,int value){
     tnode* temp=search(root,value);
@@ -115,7 +142,7 @@ void deleteNode(tnode* root,int value){
     }
 }
 int main(){
-    int choice,val;
+    int choice,val,n;
     tnode* root=NULL;
     while(1){
         printf("1. Insert\n");
@@ -129,11 +156,16 @@ int main(){
         printf("Enter choice: ");
         scanf("%d", &choice);
         switch(choice){
-            case 1: 
-                printf("Enter value: ");
-                scanf("%d", &val);
-                insert(root, val);
-                break;
+            case 1:
+            printf("Enter the number of values to insert: ");
+            scanf("%d", &n);
+            printf("Enter the values: ");
+            for (int i = 0; i < n; i++) {
+                int value;
+                scanf("%d", &value);
+                root = insert(root, value);
+            }
+            break;
             case 2:
                 printf("Pre-order traversal: ");
                 preorder(root);
@@ -163,17 +195,15 @@ int main(){
                     printf("Value %d not found in the tree.\n", val);
                 break;
             case 7:
-                printf("Enter value to delete: ");
+            exit(0);
+            break;
+            case 8:
+            printf("Enter value to delete: ");
                 scanf("%d", &val);
                 deleteNode(root, val);
-                printf("Value %d deleted from the tree.\n", val);
-                break;
-            case 8:
-                exit(0);
                 break;
             default:
             printf("Invalid choice!!!\n");
         }
-        printf("\n");
     }
 }
