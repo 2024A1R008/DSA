@@ -151,8 +151,8 @@ int main(){
         printf("4. Post-order\n");
         printf("5. Level order\n");
         printf("6. Search\n");
-        printf("8. Delete\n");
-        printf("9. Exit\n");
+        printf("7. Delete\n");
+        printf("8. Exit\n");
         printf("Enter choice: ");
         scanf("%d", &choice);
         switch(choice){
@@ -195,13 +195,12 @@ int main(){
                     printf("Value %d not found in the tree.\n", val);
                 break;
             case 7:
-            exit(0);
-            break;
-            case 8:
             printf("Enter value to delete: ");
                 scanf("%d", &val);
                 deleteNode(root, val);
                 break;
+            case 8:
+            exit(0);
             default:
             printf("Invalid choice!!!\n");
         }
