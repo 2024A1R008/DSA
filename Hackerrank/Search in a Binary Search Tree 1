@@ -1,0 +1,44 @@
+#include <stdio.h>
+#include <string.h>
+#include <math.h>
+#include <stdlib.h>
+#define SIZE 100
+int tree[SIZE];
+void initialize(){
+    for(int i=0;i<SIZE;i++)
+        tree[i]=-1;
+}
+void insert(int root,int val){
+    if(root>=SIZE) return;
+    else if(tree[root]==-1)
+        tree[root]=val;
+    else if(val<tree[root])
+        insert(2*root+1,val);
+    else if(val>tree[root])
+        insert(2*root+2,val);
+}
+void search(int i,int target){
+    while(i<SIZE && tree[i]!=-1){
+        if(target==tree[i]){
+            printf("Found");
+            return;
+        }
+    else if(target<tree[i])
+        i=2*i+1;
+    else
+        i=2*i+2;
+    }
+    printf("Not Found");
+}
+int main() {
+    initialize();
+    int n,value,target;
+    scanf("%d", &n);
+    for(int i=0;i<n;i++){
+        scanf("%d", &value);
+        insert(0,value);
+    }
+    scanf("%d", &target);
+    search(0,target);
+    return 0;
+}
