@@ -1,0 +1,43 @@
+#include <stdio.h>
+#include <string.h>
+#include <math.h>
+#include <stdlib.h>
+#define SIZE 100
+int tree[SIZE];
+int sum=0;
+void initialize(){
+for(int i=0;i<SIZE;i++){
+    tree[i]=-1;
+}
+}
+void insert(int root,int value){
+if(root>=SIZE) return;
+    else if(tree[root]==-1)
+        tree[root]=value;
+    else if(value<tree[root])
+        insert(2*root+1,value);
+    else if(value>tree[root])
+        insert(2*root+2,value);
+}
+int leafsum(int root){
+    if(tree[root]==-1) return 0;
+    int left=2*root+1,right=2*root+2;
+    if(tree[left]==-1 && tree[right]==-1)
+        sum+=tree[root];
+    else{
+        leafsum(left); leafsum(right);
+    }
+    return sum;
+}
+int main() {
+    initialize();
+    int value,n;   
+    scanf("%d", &n);
+    for(int i=0;i<n;i++){
+        scanf("%d", &value);
+        insert(0,value);
+    }
+    int sum=leafsum(0);
+    printf("%d", sum);
+    return 0;
+}
