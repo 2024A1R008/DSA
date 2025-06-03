@@ -2,33 +2,24 @@
 #include <string.h>
 #include <math.h>
 #include <stdlib.h>
-void nextgreater(int arr[],int n){
-    int result[n];
-    int stack[n];
-    int top=-1;
-    for(int i=0;i<n;i++){
-        result[i]=-1;
-    }
-    for(int i=0;i<2*n;i++){
-        int index=i%n;
-        while(top!=-1 && arr[index]>arr[stack[top]]){
-            result[stack[top]]=arr[index];
-            top--;
+    int main(){
+        int n;
+        scanf("%d", &n);
+        int arr[n],res[n];
+        for(int i=0;i<n;i++){
+            scanf("%d", &arr[i]);
+            res[i]=-1;
         }
-        if(i<n)
-            stack[++top]=index;
-    }
-    for(int i=0;i<n;i++){
-        printf("%d ", result[i]);
-    }
-}
-int main() {
-    int n;
-    scanf("%d", &n);
-    int arr[n];
-    for(int i=0;i<n;i++){
-        scanf("%d", &arr[i]);
-    }
-    nextgreater(arr,n);
+        for(int i=0;i<n;i++){
+            for(int j=1;j<n;j++){
+                if(arr[i]<arr[(i+j)%n]){
+                    res[i]=arr[(i+j)%n];
+                    break;
+                }
+            }
+        }
+        for(int i=0;i<n;i++){
+        printf("%d ",res[i]);
+            }
     return 0;
-}
+    }
