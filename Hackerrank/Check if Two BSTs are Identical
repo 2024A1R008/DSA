@@ -1,0 +1,49 @@
+#include <stdio.h>
+#include <string.h>
+#include <math.h>
+#include <stdlib.h>
+typedef struct Node{
+    struct Node* left;
+    int data;
+    struct Node* right;
+}node;
+node* createnode(int data){
+    node* newnode=(node*)malloc(sizeof(node));
+    newnode->data=data;
+    newnode->left=newnode->right=NULL;
+    return newnode;
+}
+node* insert(node* root,int data){
+    if(root==NULL) return createnode(data);
+    else if(data<root->data) 
+        root->left=insert(root->left,data);
+    else
+        root->right=insert(root->right,data);
+    return root;
+}
+int identical(node* root1,node* root2){
+    if(root1==NULL&&root2==NULL) return 1;
+    else if(root1==NULL||root2==NULL) return 0;
+    return (root1->data==root2->data)&&
+        identical(root1->left,root2->left)&&
+        identical(root1->right,root2->right);
+}
+int main() {
+    int n;
+    scanf("%d", &n);
+    int arr[n],brr[n];
+    node* root1=NULL,*root2=NULL;
+    for(int i=0;i<n;i++){
+        scanf("%d", &arr[i]);
+        root1=insert(root1,arr[i]);
+    }
+    for(int i=0;i<n;i++){
+        scanf("%d", &brr[i]);
+        root2=insert(root2,brr[i]);
+    }
+    if(identical(root1,root2))
+        printf("Identical");
+    else 
+        printf("Not Identical");
+    return 0;
+}
