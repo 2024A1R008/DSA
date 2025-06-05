@@ -1,0 +1,21 @@
+/**
+ * Definition for singly-linked list.
+ * struct ListNode {
+ *     int val;
+ *     struct ListNode *next;
+ * };
+ */
+int pairSum(struct ListNode* head) {
+    int s[100000],i=0;
+    while(head!=NULL){
+        s[i++]=head->val;
+        head=head->next;
+    }
+    int n=i,maxsum=0;
+    for(int i=0;i<n/2;i++){
+        int sum=s[i]+s[n-i-1];
+        if(maxsum<sum)
+    maxsum=sum;
+    }
+    return maxsum;
+}
